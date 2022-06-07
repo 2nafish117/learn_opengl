@@ -1,0 +1,2 @@
+C:/Users/tunafish117/Documents/Dev/cpp/learn_opengl/external/glm/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/tunafish117/Documents/Dev/cpp/learn_opengl/external/glm/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
