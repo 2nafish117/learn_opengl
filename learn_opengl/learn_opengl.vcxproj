@@ -162,6 +162,12 @@
     <ClInclude Include="src\opengl\model.h" />
     <ClInclude Include="src\opengl\shader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\cubemap.frag" />
+    <None Include="assets\shaders\cubemap.vert" />
+    <None Include="assets\shaders\model_loading.frag" />
+    <None Include="assets\shaders\model_loading.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
