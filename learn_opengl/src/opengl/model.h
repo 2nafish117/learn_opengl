@@ -58,7 +58,8 @@ private:
         // check for errors
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
-            cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
+            spdlog::error("assimp loading error: {}", importer.GetErrorString());
+            //cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
             return;
         }
         // retrieve the directory path of the filepath
@@ -239,7 +240,8 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
     }
     else
     {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
+        //std::cout << "Texture failed to load at path: " << path << std::endl;
+        spdlog::error("texture load failure {}", path);
         stbi_image_free(data);
     }
 
@@ -259,7 +261,8 @@ unsigned int CubemapTextureFromFile(const char* paths[6]) {
             stbi_image_free(data);
         }
         else {
-            std::cout << "[ERROR] cubemap loading file: " << paths[i] << " failed" << std::endl;
+            spdlog::error("texture load failure {}", paths[i]);;
+            //std::cout << "[ERROR] cubemap loading file: " << paths[i] << " failed" << std::endl;
             stbi_image_free(data);
         }
     }

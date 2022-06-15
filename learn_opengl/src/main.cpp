@@ -1,17 +1,17 @@
-
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+//#include <spdlog/spdlog.h>
+
+#include "defines.h"
 
 #include "opengl/shader.h"
 #include "opengl/camera.h"
 #include "opengl/model.h"
-
-#include <iostream>
+#include "opengl/check_error.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -32,14 +32,27 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+struct Device {
+    const u8* vendor;
+    const u8* version;
+    const u8* renderer;
+    const u8* glsl_version;
+};
+
 int main()
 {
+    spdlog::set_level(spdlog::level::debug);
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+#ifdef GL_ERROR_CALLBACK
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif // GL_ERROR_CALLBACK
 
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -50,7 +63,7 @@ int main()
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        spdlog::error("Failed to create GLFW window");
         glfwTerminate();
         return -1;
     }
@@ -66,9 +79,42 @@ int main()
     // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        spdlog::error("Failed to initialize GLAD");
         return -1;
     }
+
+    Device device;
+    device.vendor = glGetString(GL_VENDOR);
+    glCheckError();
+    device.version = glGetString(GL_VERSION);
+    glCheckError();
+    device.renderer = glGetString(GL_RENDERER);
+    glCheckError();
+    device.glsl_version = glGetString(GL_SHADING_LANGUAGE_VERSION);
+    glCheckError();
+
+    spdlog::info("vendor: {}", device.vendor);
+    spdlog::info("gl version: {}", device.version);
+    spdlog::info("renderer: {}", device.renderer);
+    spdlog::info("glsl version: {}", device.glsl_version);
+
+#ifdef GL_ERROR_CALLBACK
+    i32 flags;
+    glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+    glCheckError();
+    if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+        glEnable(GL_DEBUG_OUTPUT);
+        glCheckError();
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        glCheckError();
+        glDebugMessageCallback(glDebugOutput, NULL);
+        glCheckError();
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+        glCheckError();
+    }
+    glDebugMessageControl(GL_DEBUG_SOURCE_API, GL_DEBUG_TYPE_ERROR, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
+    glCheckError();
+#endif
 
     // tell stb_image.h to flip loaded textures on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
@@ -274,4 +320,3 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
-

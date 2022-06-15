@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,7 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\stb\stb_image.h" />
+    <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\opengl\camera.h" />
+    <ClInclude Include="src\opengl\check_error.h" />
     <ClInclude Include="src\opengl\mesh.h" />
     <ClInclude Include="src\opengl\model.h" />
     <ClInclude Include="src\opengl\shader.h" />

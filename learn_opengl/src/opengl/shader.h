@@ -11,6 +11,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <spdlog/spdlog.h>
+
 class Shader
 {
 public:
@@ -28,13 +30,13 @@ public:
         // open files
         vShaderFile.open(vertexPath);
         if (!vShaderFile) {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: "<< vertexPath << std::endl;
+            spdlog::error("shader file open failure {}", vertexPath);
             return;
         }
 
         fShaderFile.open(fragmentPath);
         if (!fShaderFile) {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << fragmentPath << std::endl;
+            spdlog::error("shader file open failure {}", fragmentPath);
             return;
         }
 
@@ -152,7 +154,8 @@ private:
             if (!success)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                spdlog::error("shader compilation error: type: {} info: {}", type, infoLog);
+                //std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
             }
         }
         else
@@ -161,7 +164,8 @@ private:
             if (!success)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                spdlog::error("shader linking error: type: {} info: {}", type, infoLog);
+                //std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
             }
         }
     }
