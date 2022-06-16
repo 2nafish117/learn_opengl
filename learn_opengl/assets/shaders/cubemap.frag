@@ -1,11 +1,13 @@
 #version 330 core
 
-in vec3 TexDir;
+in VS_OUT {
+	vec3 uvw;
+} fs_in;
 
 out vec4 FragColor;
 
 uniform samplerCube skybox;
 
 void main() {
-	FragColor = texture(skybox, TexDir);
+	FragColor = texture(skybox, fs_in.uvw);
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32510.428
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "learn_opengl", "learn_opengl\learn_opengl.vcxproj", "{9FDAA581-A51A-4798-A3F4-A18A2A749F7A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "check_shaders", "check_shaders\check_shaders.vcxproj", "{0B55AF9E-652A-4792-B832-B90A29E37C5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{9FDAA581-A51A-4798-A3F4-A18A2A749F7A}.Release|x64.Build.0 = Release|x64
 		{9FDAA581-A51A-4798-A3F4-A18A2A749F7A}.Release|x86.ActiveCfg = Release|Win32
 		{9FDAA581-A51A-4798-A3F4-A18A2A749F7A}.Release|x86.Build.0 = Release|Win32
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Debug|x64.ActiveCfg = Debug|x64
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Debug|x64.Build.0 = Debug|x64
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Debug|x86.ActiveCfg = Debug|Win32
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Debug|x86.Build.0 = Debug|Win32
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Release|x64.ActiveCfg = Release|x64
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Release|x64.Build.0 = Release|x64
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Release|x86.ActiveCfg = Release|Win32
+		{0B55AF9E-652A-4792-B832-B90A29E37C5D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

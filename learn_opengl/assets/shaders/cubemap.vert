@@ -1,14 +1,18 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
 
-out vec3 TexDir;
+out VS_OUT {
+    vec3 uvw;
+} vs_out;
 
-uniform mat4 view;
-uniform mat4 projection;
+layout (std140) uniform Matrices {
+    mat4 projection;
+    mat4 view;
+};
 
 void main()
 {
-    TexDir = aPos;
-    vec4 position = projection * view * vec4(aPos, 1.0);
+    vs_out.uvw = aPos;
+    vec4 position = projection * mat4(mat3(view)) * vec4(aPos, 1.0);
     gl_Position = position.xyww;
 }

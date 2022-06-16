@@ -131,6 +131,7 @@ int main()
     // load models
     // -----------
     Model ourModel("assets/models/backpack/backpack.obj");
+    Model cubeModel("assets/models/cube/cube.obj");
 
     const char* cubemapTextures[6] = {
         "assets/textures/skybox/right.jpg",
@@ -198,6 +199,20 @@ int main()
     stbi_set_flip_vertically_on_load(false);
     unsigned int cubemapTextureId = CubemapTextureFromFile(cubemapTextures);
 
+    // tell the shaders to use index 0 to get its Matrices uniform
+    u32 uniformBlockIndex = glGetUniformBlockIndex(ourShader.ID, "Matrices");
+    glUniformBlockBinding(ourShader.ID, uniformBlockIndex, 0);
+
+    u32 uniformBlockIndexCubemap = glGetUniformBlockIndex(cubemapShader.ID, "Matrices");
+    glUniformBlockBinding(cubemapShader.ID, uniformBlockIndexCubemap, 0);
+
+    u32 uniform_buffer_object = 0;
+    glGenBuffers(1, &uniform_buffer_object);
+    glBindBuffer(GL_UNIFORM_BUFFER, uniform_buffer_object);
+    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, uniform_buffer_object, 0, 2 * sizeof(glm::mat4));
 
     // draw in wireframe
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -221,28 +236,46 @@ int main()
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
 
+        glBindBuffer(GL_UNIFORM_BUFFER, uniform_buffer_object);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+        glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(view));
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
         // don't forget to enable shader before setting uniforms
         ourShader.use();
-        ourShader.setMat4("projection", projection);
-        ourShader.setMat4("view", view);
+        /*ourShader.setMat4("projection", projection);
+        ourShader.setMat4("view", view);*/
 
         // render the loaded model
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
+        {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
+            ourShader.setMat4("model", model);
+            ourModel.Draw(ourShader);
+        }
+
+        {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+            ourShader.setMat4("model", model);
+            cubeModel.Draw(ourShader);
+        }
 
 
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         cubemapShader.use();
-        cubemapShader.setMat4("projection", projection);
-        cubemapShader.setMat4("view", glm::mat4(glm::mat3(view)));
+        /*cubemapShader.setMat4("projection", projection);
+        cubemapShader.setMat4("view", glm::mat4(glm::mat3(view)));*/
         cubemapShader.setInt("skybox", 0);
         
         // cubemapShader.setMat4("view", view);
