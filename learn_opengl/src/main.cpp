@@ -132,6 +132,8 @@ int main()
     // -----------
     Model ourModel("assets/models/backpack/backpack.obj");
     Model cubeModel("assets/models/cube/cube.obj");
+    stbi_set_flip_vertically_on_load(false);
+    Model sponzaModel("assets/models/sponza/sponza.obj");
 
     const char* cubemapTextures[6] = {
         "assets/textures/skybox/right.jpg",
@@ -240,7 +242,7 @@ int main()
         glCullFace(GL_BACK);
 
         // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
         glm::mat4 view = camera.GetViewMatrix();
 
         glBindBuffer(GL_UNIFORM_BUFFER, uniform_buffer_object);
@@ -256,20 +258,30 @@ int main()
         // render the loaded model
         {
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-            model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));	// it's a bit too big for our scene, so scale it down
+            model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
             ourShader.setMat4("model", model);
             ourModel.Draw(ourShader);
         }
 
         {
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::translate(model, glm::vec3(3.0f, 1.0f, 0.0f)); // translate it down so it's at the center of the scene
             model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
             ourShader.setMat4("model", model);
             cubeModel.Draw(ourShader);
         }
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
+            ourShader.setMat4("model", model);
+            sponzaModel.Draw(ourShader);
+        }
 
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content

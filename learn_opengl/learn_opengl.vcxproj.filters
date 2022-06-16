@@ -53,5 +53,7 @@
     <None Include="assets\shaders\model_loading.frag" />
     <None Include="assets\shaders\model_loading.vert" />
     <None Include="assets\shaders\cubemap.frag" />
+    <None Include="assets\shaders\unshaded.vert" />
+    <None Include="assets\shaders\unshaded.frag" />
   </ItemGroup>
 </Project>

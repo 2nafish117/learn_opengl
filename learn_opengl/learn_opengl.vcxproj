@@ -169,6 +169,8 @@
     <None Include="assets\shaders\cubemap.vert" />
     <None Include="assets\shaders\model_loading.frag" />
     <None Include="assets\shaders\model_loading.vert" />
+    <None Include="assets\shaders\unshaded.frag" />
+    <None Include="assets\shaders\unshaded.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
