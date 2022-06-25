@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)external\imgui\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include;$(ProjectDir)external\glfw\include;$(ProjectDir)external\glm;$(ProjectDir)external\stb;$(ProjectDir)external\assimp\include;$(ProjectDir)external\spdlog\;$(ProjectDir)external\imgui\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,10 +152,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
+    <ClCompile Include="external\imgui\imgui\imgui.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="external\stb\stb_image.c" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="external\imgui\imgui\imconfig.h" />
+    <ClInclude Include="external\imgui\imgui\imgui.h" />
+    <ClInclude Include="external\imgui\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="external\imgui\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="external\imgui\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="external\imgui\imgui\imgui_internal.h" />
+    <ClInclude Include="external\imgui\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\imgui\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="external\stb\stb_image.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\opengl\camera.h" />
@@ -167,6 +183,7 @@
   <ItemGroup>
     <None Include="assets\shaders\cubemap.frag" />
     <None Include="assets\shaders\cubemap.vert" />
+    <None Include="assets\shaders\debug_normal.geom" />
     <None Include="assets\shaders\model_loading.frag" />
     <None Include="assets\shaders\model_loading.vert" />
     <None Include="assets\shaders\unshaded.frag" />
